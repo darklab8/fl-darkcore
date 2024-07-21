@@ -4,3 +4,5 @@ github.com/darklab8/go-typelog v0.6.1 h1:G9b+roOt5bP9M+Nn1Ao3fxjhNoUU/+NujcfNay8
 github.com/darklab8/go-typelog v0.6.1/go.mod h1:AwwOf3dkp/tpevHFNbkB+PbwlDrUUgO1CVFkEnj+q5w=
 github.com/darklab8/go-utils v0.17.5 h1:JsqUa9KCWUuY/o4dLzltkU2bLsR+RV+nlD/qfkXxpIw=
 github.com/darklab8/go-utils v0.17.5/go.mod h1:zApy0zIFiGCw496OIot7dl8i2cAsQMyPyf3PCMMpS3g=
+github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
+github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
