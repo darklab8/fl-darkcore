@@ -52,7 +52,7 @@ func (b *Builder) RegComps(components ...*Component) {
 
 func (b *Builder) build(components []*Component, params Params, filesystem *Filesystem) {
 
-	timeit.NewTimerF(func(m *timeit.Timer) {
+	timeit.NewTimerF(func() {
 		results := make(chan WriteResult)
 		for _, comp := range components {
 			go func(comp *Component) {
@@ -65,7 +65,7 @@ func (b *Builder) build(components []*Component, params Params, filesystem *File
 		}
 	}, timeit.WithMsg("wrote components"))
 
-	timeit.NewTimerF(func(m *timeit.Timer) {
+	timeit.NewTimerF(func() {
 		target_folder := params.GetBuildPath().Join("static")
 
 		for _, static_file := range b.static_files {
@@ -76,6 +76,7 @@ func (b *Builder) build(components []*Component, params Params, filesystem *File
 }
 
 func (b *Builder) BuildAll() *Filesystem {
+
 	build_root := utils_types.FilePath("build")
 	filesystem := NewFileystem(build_root)
 
