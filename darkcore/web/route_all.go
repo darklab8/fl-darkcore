@@ -28,10 +28,12 @@ func (w *Web) NewEndpointStatic() *registry.Endpoint {
 				}
 
 				requested = strings.ReplaceAll(requested, "/", PATH_SEPARATOR)
-				logus.Log.Info("having get request",
+				logger := logus.Log.WithFields(
 					typelog.String("requested_path", requested),
 					typelog.Int("files_count", len(w.filesystem.Files)),
 				)
+
+				logger.Info("having get request")
 
 				content, ok := w.filesystem.Files[utils_types.FilePath(requested)]
 				if ok {
@@ -39,6 +41,7 @@ func (w *Web) NewEndpointStatic() *registry.Endpoint {
 				} else {
 					resp.WriteHeader(http.StatusNotFound)
 					fmt.Fprintf(resp, "content is not found at %s!, %q", req.URL, html.EscapeString(requested))
+					logus.Log.Error("content is not found")
 				}
 
 			default:
