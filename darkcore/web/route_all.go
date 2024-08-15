@@ -36,6 +36,11 @@ func (w *Web) NewEndpointStatic() *registry.Endpoint {
 				logger.Info("having get request")
 
 				content, ok := w.filesystem.Files[utils_types.FilePath(requested)]
+
+				if strings.Contains(requested, ".css") {
+					resp.Header().Set("Content-Type", "text/css; charset=utf-8")
+				}
+
 				if ok {
 					fmt.Fprint(resp, string(content))
 				} else {

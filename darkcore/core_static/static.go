@@ -45,12 +45,12 @@ var SortableJS core_types.StaticFile = core_types.StaticFile{
 	Kind:     core_types.StaticFileJS,
 }
 
-//go:embed reset.html
+//go:embed reset.css
 var ResetCSSContent string
 
 var ResetCSS core_types.StaticFile = core_types.StaticFile{
 	Content:  ResetCSSContent,
-	Filename: "reset.html",
+	Filename: "reset.css",
 	Kind:     core_types.StaticFileCSS,
 }
 
