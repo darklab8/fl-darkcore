@@ -39,6 +39,10 @@ func (w *Web) NewEndpointStatic() *registry.Endpoint {
 
 				if strings.Contains(requested, ".css") {
 					resp.Header().Set("Content-Type", "text/css; charset=utf-8")
+				} else if strings.Contains(requested, ".html") {
+					resp.Header().Set("Content-Type", "text/html; charset=utf-8")
+				} else if strings.Contains(requested, ".js") {
+					resp.Header().Set("Content-Type", "application/javascript; charset=utf-8")
 				}
 
 				if ok {
