@@ -46,7 +46,7 @@ func (w *Web) NewEndpointStatic() *registry.Endpoint {
 				}
 
 				if ok {
-					fmt.Fprint(resp, string(content))
+					fmt.Fprint(resp, string(content.Render()))
 				} else {
 					resp.WriteHeader(http.StatusNotFound)
 					fmt.Fprintf(resp, "content is not found at %s!, %q", req.URL, html.EscapeString(requested))

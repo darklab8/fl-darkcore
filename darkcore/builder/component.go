@@ -31,18 +31,20 @@ type WriteResult struct {
 	bytes    []byte
 }
 
+func (h *Component) GetPagePath(gp Params) utils_types.FilePath {
+	return utils_filepath.Join(gp.GetBuildPath(), h.pagepath)
+}
+
 func (h *Component) Write(gp Params) WriteResult {
 	buf := bytes.NewBuffer([]byte{})
 
 	// gp.Pagepath = string(h.pagepath)
 
-	realpath := utils_filepath.Join(gp.GetBuildPath(), h.pagepath)
-
 	h.templ_comp.Render(context.WithValue(context.Background(), core_types.GlobalParamsCtxKey, gp), buf)
 
 	// Usage of gohtml is not obligatory, but nice touch simplifying debugging view.
 	return WriteResult{
-		realpath: realpath,
+		realpath: h.GetPagePath(gp),
 		bytes:    buf.Bytes(),
 	}
 }
