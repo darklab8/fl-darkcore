@@ -16,6 +16,7 @@ const (
 	StaticFileCSS StaticFileKind = iota
 	StaticFileJS
 	StaticFileIco
+	StaticFilePicture
 )
 
 type StaticFile struct {

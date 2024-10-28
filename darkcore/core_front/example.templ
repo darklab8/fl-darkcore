@@ -4,6 +4,8 @@ import "github.com/darklab8/fl-darkcore/darkcore/core_types"
 
 templ StaticFile(file core_types.StaticFile) {
 	switch file.Kind {
+		case core_types.StaticFilePicture:
+			// pass
 		case core_types.StaticFileCSS:
 			<link rel="stylesheet" href={ core_types.GetCtx(ctx).GetStaticRoot() + file.Filename }/>
 			// @templ.Raw("<style>" + file.Content + "</style>")
