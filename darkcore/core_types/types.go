@@ -13,10 +13,10 @@ type Url string
 type StaticFileKind int64
 
 const (
-	StaticFileCSS StaticFileKind = iota
+	StaticFileUnknown StaticFileKind = iota // default unkonwn
 	StaticFileJS
 	StaticFileIco
-	StaticFilePicture
+	StaticFileCSS
 )
 
 type StaticFile struct {

@@ -83,11 +83,6 @@ func StaticFile(file core_types.StaticFile) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-		default:
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("UNSUPPORTED STATIC FILE")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
 		}
 		return templ_7745c5c3_Err
 	})
