@@ -16,12 +16,14 @@ import (
 type Web struct {
 	filesystem *builder.Filesystem
 	registry   *registry.Registion
+	mux        *http.ServeMux
 }
 
 func NewWeb(filesystem *builder.Filesystem) *Web {
 	w := &Web{
 		filesystem: filesystem,
 		registry:   registry.NewRegister(),
+		mux:        http.NewServeMux(),
 	}
 
 	w.registry.Register(w.NewEndpointStatic())
@@ -31,15 +33,23 @@ func NewWeb(filesystem *builder.Filesystem) *Web {
 	return w
 }
 
-func (w *Web) Serve() {
+type WebServeOpts struct {
+	Port *int
+}
+
+func (w *Web) Serve(opts WebServeOpts) {
 	w.registry.Foreach(func(e *registry.Endpoint) {
-		http.HandleFunc(string(e.Url), e.Handler)
+		w.mux.HandleFunc(string(e.Url), e.Handler)
 	})
 
 	ip := "0.0.0.0"
-	port := 8000
+	var port int = 8000
+	if opts.Port != nil {
+		port = *opts.Port
+	}
+
 	fmt.Printf("launching web server, visit http://localhost:%d to check it!\n", port)
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", ip, port), nil); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", ip, port), w.mux); err != nil {
 		log.Fatal(err)
 	}
 }
