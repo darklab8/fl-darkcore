@@ -72,10 +72,12 @@ func chunkSlice(slice []*Component, chunkSize int) [][]*Component {
 // func (b *Builder) ToWebServer() *Filesystem {
 // }
 
-func (b *Builder) BuildAll(to_mem bool) *Filesystem {
+func (b *Builder) BuildAll(to_mem bool, filesystem *Filesystem) *Filesystem {
 
 	build_root := utils_types.FilePath("build")
-	filesystem := NewFileystem(build_root)
+	if filesystem == nil {
+		filesystem = NewFileystem(build_root)
+	}
 
 	filesystem.CreateBuildFolder()
 	fmt.Println("beginning build operation")
