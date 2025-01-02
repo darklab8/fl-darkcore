@@ -37,6 +37,18 @@ type WebServeOpts struct {
 	Port *int
 }
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Headers", "*")
+}
+
+func CorsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w)
+		next.ServeHTTP(w, r)
+	})
+}
+
 func (w *Web) Serve(opts WebServeOpts) {
 	w.registry.Foreach(func(e *registry.Endpoint) {
 		w.mux.HandleFunc(string(e.Url), e.Handler)
@@ -49,7 +61,7 @@ func (w *Web) Serve(opts WebServeOpts) {
 	}
 
 	fmt.Printf("launching web server, visit http://localhost:%d to check it!\n", port)
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", ip, port), w.mux); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", ip, port), CorsMiddleware(w.mux)); err != nil {
 		log.Fatal(err)
 	}
 }

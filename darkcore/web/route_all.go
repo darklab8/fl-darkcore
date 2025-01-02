@@ -20,6 +20,7 @@ func (w *Web) NewEndpointStatic() *registry.Endpoint {
 		Url: UrlStatic,
 		Handler: func(resp http.ResponseWriter, req *http.Request) {
 			switch req.Method {
+			case http.MethodOptions:
 			case http.MethodGet:
 
 				requested := req.URL.Path[1:]
