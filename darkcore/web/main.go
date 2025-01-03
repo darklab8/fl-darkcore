@@ -17,13 +17,29 @@ type Web struct {
 	filesystem *builder.Filesystem
 	registry   *registry.Registion
 	mux        *http.ServeMux
+
+	site_root           string
+	site_root_acceptors []string
 }
 
-func NewWeb(filesystem *builder.Filesystem) *Web {
+type WebOpt func(w *Web)
+
+func WithSiteRootAcceptors(acceptors []string, site_root string) WebOpt {
+	return func(w *Web) {
+		w.site_root_acceptors = acceptors
+		w.site_root = site_root
+	}
+}
+
+func NewWeb(filesystem *builder.Filesystem, opts ...WebOpt) *Web {
 	w := &Web{
 		filesystem: filesystem,
 		registry:   registry.NewRegister(),
 		mux:        http.NewServeMux(),
+	}
+
+	for _, opt := range opts {
+		opt(w)
 	}
 
 	w.registry.Register(w.NewEndpointStatic())

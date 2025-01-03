@@ -24,11 +24,17 @@ func (w *Web) NewEndpointStatic() *registry.Endpoint {
 			case http.MethodGet:
 
 				requested := req.URL.Path[1:]
+
+				requested = strings.ReplaceAll(requested, "/", PATH_SEPARATOR)
+
+				for _, acceptor := range w.site_root_acceptors {
+					requested = strings.ReplaceAll(requested, acceptor, w.site_root[1:])
+				}
+
 				if requested == "" {
 					requested = "index.html"
 				}
 
-				requested = strings.ReplaceAll(requested, "/", PATH_SEPARATOR)
 				logger := logus.Log.WithFields(
 					typelog.String("requested_path", requested),
 					typelog.Int("files_count", len(w.filesystem.Files)),
